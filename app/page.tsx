@@ -1,7 +1,8 @@
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-export default function Home() {
+export default function Page() {
   return (
-    <p className="text-red-500 font-bold">Hello Twitch Clone</p>
+    <Button size="lg" >Click me</Button>
   );
 }
