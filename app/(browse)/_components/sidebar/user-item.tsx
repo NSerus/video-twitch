@@ -39,7 +39,7 @@ export function UserItem({ username, imageUrl, isLive }: UserItemProps) {
             collapsed && "justify-center"
           )}
         >
-          <UserAvatar imageUrl={imageUrl} username={username} isLive={false} />
+          <UserAvatar imageUrl={imageUrl} username={username} isLive={isLive} />
         </div>
       </Link>
     </Button>

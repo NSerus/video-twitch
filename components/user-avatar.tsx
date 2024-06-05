@@ -3,6 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { Skeleton } from "./ui/skeleton";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { LiveBadge } from "@/components/live-badge";
 
 const avatarSizes = cva("", {
   variants: {
@@ -23,6 +24,35 @@ interface UserAvatarProps extends VariantProps<typeof avatarSizes> {
   showBadge?: boolean;
 }
 
-export function UserAvatar({}: UserAvatarProps) {
-  return <div>UserAvatar</div>;
+export function UserAvatar({
+  username,
+  imageUrl,
+  isLive,
+  showBadge,
+  size,
+}: UserAvatarProps) {
+  const canShowBadge = showBadge && isLive;
+
+  return (
+    <div className="relative">
+      <Avatar
+        className={cn(
+          isLive && "ring-2 ring-rose-500 border border-background",
+          avatarSizes({ size })
+        )}
+      >
+        <AvatarImage src={imageUrl} className="object-cover" />
+        <AvatarFallback>
+          {username[0]}
+          {username[username.length - 1]}
+        </AvatarFallback>
+      </Avatar>
+      {canShowBadge && (
+        <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2">
+          {" "}
+          <LiveBadge />
+        </div>
+      )}
+    </div>
+  );
 }
