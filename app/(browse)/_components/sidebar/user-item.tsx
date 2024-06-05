@@ -40,6 +40,8 @@ export function UserItem({ username, imageUrl, isLive }: UserItemProps) {
           )}
         >
           <UserAvatar imageUrl={imageUrl} username={username} isLive={isLive} />
+
+          {!collapsed && <p className="truncate"> {username}</p>}
         </div>
       </Link>
     </Button>

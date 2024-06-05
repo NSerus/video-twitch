@@ -56,3 +56,10 @@ export function UserAvatar({
     </div>
   );
 }
+
+//For loading
+interface UserAvatarSkeletonProps extends VariantProps<typeof avatarSizes> {}
+
+export function UserAvatarSkeleton({ size }: UserAvatarSkeletonProps) {
+  return <Skeleton className={cn("rounded-full", avatarSizes({ size }))} />;
+}
