@@ -15,9 +15,11 @@ export function Actions({ isFollowing, userId }: ActionsProps) {
   const onClick = () => {
     startTransition(() => {
       onFollow(userId)
-        .then((data) =>
-          toast.success(`You are now following ${data.following.username}`)
-        )
+        .then((data) => {
+          return toast.success(
+            `You are now following ${data.following.username}`
+          );
+        })
         .catch(() => toast.error("Something went wrong"));
     });
   };
