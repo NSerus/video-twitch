@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { followUser } from "@/lib/follow-service";
+import { followUser, unfollowUser } from "@/lib/follow-service";
 
 export async function onFollow(id: string) {
   try {
@@ -12,8 +12,23 @@ export async function onFollow(id: string) {
       revalidatePath(`/${followedUser.following.username}`);
     }
 
-    return followUser;
-  } catch {
-    throw new Error("Internal error");
+    return followedUser;
+  } catch (error) {
+    throw new Error("Internal Error");
+  }
+}
+
+export async function onUnfollow(id: string) {
+  try {
+    const unfollowedUser = await unfollowUser(id);
+
+    revalidatePath("/");
+    if (unfollowedUser) {
+      revalidatePath(`/${unfollowedUser.following.username}`);
+    }
+
+    return unfollowedUser;
+  } catch (error) {
+    throw new Error("Internal Error");
   }
 }
