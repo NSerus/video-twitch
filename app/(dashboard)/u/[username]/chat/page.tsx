@@ -19,6 +19,16 @@ async function ChatPage() {
           label="Enable chat"
           value={stream.isChatEnabled}
         />
+        <ToggleCard
+          field="isChatDelayed" /* dont use key beacuse its reserved */
+          label="Delay chat"
+          value={stream.isChatDelayed}
+        />
+        <ToggleCard
+          field="isChatFollowersOnly" /* dont use key beacuse its reserved */
+          label="Must be following to chat"
+          value={stream.isChatFollowersOnly}
+        />
       </div>
     </div>
   );

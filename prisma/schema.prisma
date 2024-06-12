@@ -44,7 +44,7 @@ model Stream{
   streamKey String? @db.Text
 
   isLive Boolean @default(false)
-  isChatEnabled Boolean @default(false)
+  isChatEnabled Boolean @default(true)
   isChatDelayed Boolean @default(false)
   isChatFollowersOnly Boolean @default(false)
 
