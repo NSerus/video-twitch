@@ -23,7 +23,7 @@ export async function isBlockedByUser(id: string) {
       },
     });
 
-    return existingBlock;
+    return !!existingBlock;
   } catch {
     return false;
   }
