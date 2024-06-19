@@ -14,7 +14,7 @@ export async function getFollowedUsers() {
       },
       include: {
         following: {
-          include: { stream: true },
+          include: { stream: { select: { isLive: true } } },
         },
       },
     });
