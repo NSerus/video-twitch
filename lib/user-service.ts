@@ -19,5 +19,5 @@ export const getUserById = async (id: string) => {
       stream: true,
     },
   });
-  return true;
+  return user;
 };
