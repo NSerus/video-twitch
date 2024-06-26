@@ -6,6 +6,7 @@ import { useParticipants } from "@livekit/components-react";
 
 import { ScrollArea } from "../ui/scroll-area";
 import { Input } from "../ui/input";
+import { CommunityItem } from "./community-item";
 
 interface ChatCommunityProps {
   hostName: string;
