@@ -20,9 +20,11 @@ export const VolumeControl = ({
 
   let Icon = Volume1;
 
+  //handles volume icons
   if (isMuted) Icon = VolumeX;
   else if (isAboveHalf) Icon = Volume2;
 
+  //handles labels
   const label = isMuted ? "Unmute" : "Mute";
 
   const handleChange = (value: number[]) => {
