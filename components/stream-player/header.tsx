@@ -6,8 +6,10 @@ import {
   useParticipants,
   useRemoteParticipant,
 } from "@livekit/components-react";
-import { UserAvatar } from "../user-avatar";
+import { UserAvatar, UserAvatarSkeleton } from "../user-avatar";
 import { VerifiedMark } from "../verified-mark";
+import { ActionSkeleton, Actions } from "./actions";
+import { Skeleton } from "../ui/skeleton";
 
 interface HeaderProps {
   imageUrl: string;
@@ -36,7 +38,7 @@ export const Header = ({
   const isHost = viewerIdentity === hostAsViewer;
 
   return (
-    <div className=" flex flex-col-1 lg:flex-row gap-y-4 lg:gap-y-0 items-start justify-between px-4">
+    <div className=" flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 items-start justify-between px-4">
       <div className="flex items-center gap-x-3">
         <UserAvatar
           imageUrl={imageUrl}
@@ -55,7 +57,7 @@ export const Header = ({
             <div className="font-semibold flex gap-x-1 items-center text-xs text-rose-500">
               <UserIcon className="" />
               <p>
-                {participantCount}{" "}
+                {participantCount}
                 {participantCount === 1 ? "viewer" : "viewers"}
               </p>
             </div>
@@ -66,6 +68,26 @@ export const Header = ({
           )}
         </div>
       </div>
+      <Actions
+        isFollowing={isFollowing}
+        hostIdentity={hostIdentity}
+        isHost={isHost}
+      />
+    </div>
+  );
+};
+
+export const HeaderSkeleton = () => {
+  return (
+    <div className=" flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 items-start justify-between px-4">
+      <div className="flex items-center gap-x-2">
+        <UserAvatarSkeleton size={"lg"} />
+        <div className="space-y-2">
+          <Skeleton className="h-6 w-32"></Skeleton>
+          <Skeleton className="h-4 w-24"></Skeleton>
+        </div>
+      </div>
+      <ActionSkeleton />
     </div>
   );
 };
