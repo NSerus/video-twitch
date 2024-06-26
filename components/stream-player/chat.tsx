@@ -1,5 +1,17 @@
 "use client";
 
+import { ConnectionState } from "livekit-client";
+import { useMediaQuery } from "usehooks-ts";
+import {
+  useChat,
+  useConnectionState,
+  useRemoteParticipant,
+} from "@livekit/components-react";
+
+import { useChatSidebar } from "@/store/use-chat-sidebar";
+import { useEffect, useMemo, useState } from "react";
+import { ChatHeader } from "./chat-header";
+
 interface ChatProps {
   hostName: string;
   hostIdentity: string;
@@ -19,5 +31,43 @@ export const Chat = ({
   isChatDelayed,
   isChatFollowersOnly,
 }: ChatProps) => {
-  return <div>Chats</div>;
+  const matches = useMediaQuery("(max-width: 1024px)");
+  const { variant, onExpand } = useChatSidebar((state) => state);
+  const connectionState = useConnectionState();
+  const participant = useRemoteParticipant(hostIdentity);
+
+  //make sure that is connected and participant exists
+  const isOnline = participant && connectionState === ConnectionState.Connected;
+
+  const isHidden = !isChatEnabled || !isOnline;
+
+  const [value, setValue] = useState("");
+  const { chatMessages: messages, send } = useChat();
+
+  //resets collapsed state depending on matched screen
+  useEffect(() => {
+    if (matches) onExpand();
+  }, [matches, onExpand]);
+
+  const reversedMessages = useMemo(() => {
+    return messages.sort((a, b) => b.timestamp - a.timestamp);
+  }, [messages]);
+
+  //submitting message
+  const onSubmit = () => {
+    if (!send) return;
+    send(value);
+    setValue("");
+  };
+
+  //writing values
+  const onChange = (value: string) => {
+    setValue(value);
+  };
+
+  return (
+    <div className="flex flex-col bg-background border-l border-b pt-0 h-[calc(100vh-80px)]">
+      <ChatHeader />
+    </div>
+  );
 };
