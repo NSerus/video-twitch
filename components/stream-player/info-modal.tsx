@@ -1,5 +1,8 @@
 "use client";
 
+import { useState, useTransition, useRef, ElementRef } from "react";
+import { toast } from "sonner";
+
 import {
   Dialog,
   DialogClose,
@@ -11,7 +14,7 @@ import {
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { useState } from "react";
+import { updateStream } from "@/actions/stream";
 
 interface InfoModalProps {
   initialName: string;
@@ -19,8 +22,25 @@ interface InfoModalProps {
 }
 
 export const InfoModal = ({ initialName, initialUrl }: InfoModalProps) => {
+  const closeRef = useRef<ElementRef<"button">>(null);
+  const [isPending, startTransition] = useTransition();
   const [name, setName] = useState(initialName);
 
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    startTransition(() => {
+      updateStream({ name: name })
+        .then(() => {
+          toast.success("Stream updated");
+          closeRef?.current?.click();
+        })
+        .catch(() => toast.error("Something went wrong"));
+    });
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -32,23 +52,23 @@ export const InfoModal = ({ initialName, initialUrl }: InfoModalProps) => {
         <DialogHeader>
           <DialogTitle>Edit stream info</DialogTitle>
         </DialogHeader>
-        <form className="space-y-14">
+        <form onSubmit={onSubmit} className="space-y-14">
           <div className="space-y-2">
             <Label>Name</Label>
             <Input
               placeholder="Stream name"
-              onChange={() => {}}
+              onChange={onChange}
               value={name}
-              disabled={false}
+              disabled={isPending}
             ></Input>
           </div>
           <div className="flex justify-between">
-            <DialogClose asChild>
+            <DialogClose ref={closeRef} asChild>
               <Button type="button" variant={"ghost"}>
                 Cancel
               </Button>
             </DialogClose>
-            <Button disabled={false} variant={"primary"} type="submit">
+            <Button disabled={isPending} variant={"primary"} type="submit">
               Save
             </Button>
           </div>
