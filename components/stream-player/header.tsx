@@ -44,7 +44,7 @@ export const Header = ({
           imageUrl={imageUrl}
           username={hostName}
           size={"lg"}
-          isLive={true}
+          isLive={isLive}
           showBadge
         />
         <div className="space-y-1">
@@ -55,10 +55,10 @@ export const Header = ({
           <p className="text-sm font-semibold">{name}</p>
           {isLive ? (
             <div className="font-semibold flex gap-x-1 items-center text-xs text-rose-500">
-              <UserIcon className="" />
+              <UserIcon className="h-4 w-4" />
               <p>
                 {participantCount}
-                {participantCount === 1 ? "viewer" : "viewers"}
+                {participantCount === 1 ? " viewer" : " viewers"}
               </p>
             </div>
           ) : (
