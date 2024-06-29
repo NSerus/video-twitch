@@ -2,6 +2,7 @@
 
 import { useState, useTransition, useRef, ElementRef } from "react";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 import {
   Dialog,
@@ -15,16 +16,23 @@ import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { updateStream } from "@/actions/stream";
+import { UploadDropzone } from "@/lib/uploadthing";
 
 interface InfoModalProps {
   initialName: string;
-  initialUrl: string | null;
+  initialThumbnailUrl: string | null;
 }
 
-export const InfoModal = ({ initialName, initialUrl }: InfoModalProps) => {
+export const InfoModal = ({
+  initialName,
+  initialThumbnailUrl,
+}: InfoModalProps) => {
+  const router = useRouter();
   const closeRef = useRef<ElementRef<"button">>(null);
   const [isPending, startTransition] = useTransition();
+
   const [name, setName] = useState(initialName);
+  const [thumbnailUrl, setThumbnailUrl] = useState(initialName);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -61,6 +69,22 @@ export const InfoModal = ({ initialName, initialUrl }: InfoModalProps) => {
               value={name}
               disabled={isPending}
             ></Input>
+          </div>
+          <div className="space-y-2">
+            <Label>Thumbnail</Label>
+            <div className="rounded-xl border outline-dashed outline-muted">
+              <UploadDropzone
+                endpoint="thumbnailUploader"
+                appearance={{
+                  label: { color: "#FFFFFF" },
+                  allowedContent: { color: "#FFFFFF" },
+                }}
+                onClientUploadComplete={(res) => {
+                  setThumbnailUrl(res?.[0]?.url);
+                  router.refresh();
+                }}
+              ></UploadDropzone>
+            </div>
           </div>
           <div className="flex justify-between">
             <DialogClose ref={closeRef} asChild>
