@@ -35,6 +35,7 @@ export const Thumbnail = ({
       <Image
         src={src}
         fill
+        sizes="sm"
         alt="Thumbnail"
         className="object-cover transition-transform group-hover:translate-x-2 group-hover:-translate-y-2 rounded-md"
       />
