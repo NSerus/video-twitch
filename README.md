@@ -1,7 +1,8 @@
 ## A small project emulating the video streaming platform twitch.
-![image](https://github.com/user-attachments/assets/36a584fc-3854-45f9-b6cb-3b3d308e9e25)
+![image](https://github.com/user-attachments/assets/d7567e53-d416-4f4b-9d47-06ea72d61a2b)
 
-![image](https://github.com/user-attachments/assets/39787b2b-bdf3-4773-acd9-004a89d305f8)
+![image](https://github.com/user-attachments/assets/8c83ac00-f189-4526-92f0-3277a8fa1a09)
+
 
 Tech used:
 - **Next.js** - For Back-end and Front-end
