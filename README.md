@@ -7,6 +7,6 @@ Tech used:
 - **NGrok** - To have a local tunnel
 - **Livekit Ingress** - To host the Livestreams
 
-###You will currently need to setup all these technologies in order to activate the website functionality
+### You will currently need to setup all these technologies in order to activate the website functionality
 
-##Working on Deployment with **Vercel**
+## Working on Deployment with **Vercel**
